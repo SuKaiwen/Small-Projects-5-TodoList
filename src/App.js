@@ -52,11 +52,30 @@ function App() {
     }
   });
 
+  const handleDragEnd = ({destination, source}) => {
+    if(!destination){
+        return;
+    }
+    if(destination.index === source.index && destination.droppableId === source.droppableId){
+        return;
+    }
+
+    const copy = {...state[source.droppableId].items[source.index]};
+    setState(prev => {
+        prev={...prev};
+        prev[source.droppableId].items.splice(source.index, 1);
+
+        prev[destination.droppableId].items.splice(destination.index, 0, copy);
+
+        return prev;
+    })
+  }
+
   return (
     <div>
       <h1>Todo List</h1>
       <div className="App">
-      <DragDropContext onDragEnd={e => console.log(e)}>
+      <DragDropContext onDragEnd={handleDragEnd}>
         {_.map(state, (data, key) => {
             return (
                 <div key = {key} className="column">
