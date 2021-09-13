@@ -36,3 +36,34 @@
     transform: rotate(360deg);
   }
 }
+
+.App{
+    display: flex;
+    width: 100%;
+    justify-content: left;
+    overflow-x: scroll;
+}
+
+.App .column {
+    width:30%;
+    min-width: 200px;
+    padding:5px;
+}
+
+.droppable-col{
+    width:100%;
+    background-color:gray;
+    padding:10px 0px 0px 10px;
+    border-radius: 7px;
+    display:flex;
+    flex-direction: column;
+}
+
+.item {
+    width:90%;
+    margin-bottom: 10px;
+    color:white;
+    border: 1px solid white;
+    padding: 5px;
+    border-radius: 7px;
+}
