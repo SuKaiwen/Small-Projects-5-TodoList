@@ -7,28 +7,24 @@ import _ from "lodash";
 const item = {
     id:"13012",
     name: "nxxxx",
-    desc: "desc",
-    assignedTo: "Mark",
-    assignedBy: "John"
 }
 
 const item2 = {
     id:"123",
     name: "pepe",
-    desc: "esc",
-    assignedTo:"peter",
-    assignedBy: "John",
 }
 
 const item3 = {
     id:"12324",
     name: "pepe33",
-    desc: "esc",
-    assignedTo:"peter",
-    assignedBy: "John",
 }
 
 function App() {
+  const [text, setText] = useState();
+  const [assigned, setAssigned] = useState();
+  const [assignedBy, setAssignedBy] = useState();
+  const [group, setGroup] = useState();
+
   const [state, setState] = useState({
     "todo":{
         title: "Todo",
@@ -64,16 +60,40 @@ function App() {
     setState(prev => {
         prev={...prev};
         prev[source.droppableId].items.splice(source.index, 1);
-
         prev[destination.droppableId].items.splice(destination.index, 0, copy);
-
         return prev;
     })
+  }
+
+  const addItem = () => {
+    setState(prev => {
+        return {
+            ...prev,
+            todo: {
+                title:"title",
+                items:[
+                {
+                    id:"1234",
+                    name: text
+                },
+                ...prev.todo.items]
+            }
+        }
+    })
+
+    setText("");
   }
 
   return (
     <div>
       <h1>Todo List</h1>
+      <div>
+          <input type="text" placeholder="Name..." value={text} onChange={(e) => setText(e.target.value)} />
+          <input type="text" placeholder="To..." value={text} onChange={(e) => setAssigned(e.target.value)} />
+          <input type="text" placeholder="From..." value={text} onChange={(e) => setAssignedBy(e.target.value)} />
+          <input type="text" placeholder="Group..." value={text} onChange={(e) => setGroup(e.target.value)} />
+          <button onClick={addItem}>Add</button>
+        </div>
       <div className="App">
       <DragDropContext onDragEnd={handleDragEnd}>
         {_.map(state, (data, key) => {
@@ -98,10 +118,7 @@ function App() {
                                                             {...provided.dragHandleProps}
                                                             className="item"
                                                         >
-                                                            <h1>{x.name}</h1>
-                                                            <p>{x.desc}</p>
-                                                            <p>Assigned to: {x.assignedTo}</p>
-                                                            <p>Assigned by: {x.assignedBy}</p>
+                                                            <p>{x.name}</p>
                                                         </div>
 
                                                     )
